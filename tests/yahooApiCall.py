@@ -1,3 +1,7 @@
+#Need to install the following:
+#pip install pandas
+#pip install pandas-datareader
+
 import pandas as pd
 import pandas_datareader.data as dr
 import datetime as dt
