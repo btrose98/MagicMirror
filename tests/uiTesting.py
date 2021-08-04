@@ -1,21 +1,21 @@
 # https://www.youtube.com/watch?v=YXPyB4XeYLA
 
 from tkinter import *
+from weatherCall import weatherCall
 
 root = Tk()
 root.title('Smart Mirror - User Interface')
 root.configure(background='black')
 
-# labelWidget1 = Label(root, text="Calendar", fg='white', bg='black').grid(row=0, column=0)
-
-# labelWidget2 = Label(root, text="Weather", fg='white', bg='black').grid(row=0, column=1)
-
-# labelWidget3 = Label(root, text="Stonks", fg='white', bg='black').grid(row=1, column=0)
+weather = weatherCall()
+temperature = weather.temp
+humidity = weather.humidity
 
 labelWidget1 = Label(root, text="Calendar", fg='white', bg='black')
 labelWidget1.pack(side=TOP, anchor=NW)
 
-labelWidget2 = Label(root, text="Weather", fg='white', bg='black')
+weatherText = "WEATHER\n\n Temperature:  {temp} \n Humidity:  {humid}".format(temp = temperature, humid = humidity)
+labelWidget2 = Label(root, text= weatherText, fg='white', bg='black')
 labelWidget2.pack(side=TOP, anchor=NE)
 
 labelWidget3 = Label(root, text="Stonks", fg='white', bg='black')
