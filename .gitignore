@@ -1,5 +1,5 @@
 config.ini
 credentials.json
 token.json
-__pycache__
+__pycache__/
 .vscode
