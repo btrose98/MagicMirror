@@ -5,7 +5,14 @@ from weatherCall import weatherCall
 from newsCall import newsCall
 import time
 
+weather = weatherCall()
+news = newsCall()
+
+
 def main():
+
+#--------------STARTUP SCREEN--------------------
+
     #create a spash screen
     startupscreen = tk.Tk()
     startupscreen.title('Smart Mirror: Python Mod')
@@ -29,6 +36,26 @@ def main():
     startupscreen.geometry("+{}+{}".format(positionRight, positionDown))
     startupscreen.update()
 
+#--------------END OF STARTUP SCREEN--------------------
+
+#--------------START OF MAIN SCREEN--------------------
+
+    root = tk.Tk()
+    root.title('Mirror')
+
+    #--------------WEATHER--------------------
+    weatherText = "WEATHER\n\n Temperature:  {temp} \n Humidity:  {humid}".format(temp = weather.temp, humid = weather.humidity)
+    weatherWidget = Label(root, font = ('caviar dreams', 10), text= weatherText, fg='white', bg='pink')
+    weatherWidget.pack(side=TOP, anchor=E)
+    #--------------END OF WEATHER--------------------
+
+    #--------------NEWS--------------------
+    newsText = "NEWS\n\n 1: {title1}\n 2: {title2}\n 3: {title3}".format(title1 = news.articleTitle1, title2 = news.articleTitle2, title3 = news.articleTitle3)
+    newsWidget = Label(root, font = ('caviar dreams', 10), text=newsText, fg='white', bg='pink', justify=RIGHT)
+    newsWidget.pack(side=BOTTOM, anchor=E)
+    #--------------END OF NEWS--------------------
+
+    #--------------CLOCK--------------------
     while True:
         #get the hour 
         def getHour(time1=''):
@@ -46,9 +73,6 @@ def main():
                 clock_frame2.config(text=time4)
             clock_frame2.after(200, getMinSec)      
 
-        root = tk.Tk()
-        root.title('Mirror')
-
         masterclock = Label(root)
         masterclock.pack(side=TOP, anchor=W, padx=45)
         
@@ -60,26 +84,16 @@ def main():
 
         getHour()
         getMinSec()
+    #--------------END OF CLOCK--------------------
 
-        #--------------Weather--------------------
-        weather = weatherCall()
-        temperature = weather.temp
-        humidity = weather.humidity
-        weatherText = "WEATHER\n\n Temperature:  {temp} \n Humidity:  {humid}".format(temp = temperature, humid = humidity)
-        weatherWidget = Label(root, font = ('caviar dreams', 10), text= weatherText, fg='white', bg='pink')
-        weatherWidget.pack(side=TOP, anchor=E)
-        #--------------END OF WEATHER--------------------
-
-        #--------------News--------------------
-        newsText = "NEWS\n\n 1: {title1}\n 2: {title2}\n 3: {title3}".format(title1 = newsCall.articleTitle1, title2 = newsCall.articleTitle2, title3 = newsCall.articleTitle3)
-        newsWidget = Label(root, font = ('caviar dreams', 10), text=newsText, fg='white', bg='pink', justify=RIGHT)
-        newsWidget.pack(side=BOTTOM, anchor=E)
-        #--------------END OF NEWS--------------------
 
         root.attributes("-fullscreen", True)
         root.configure(background='black')
         startupscreen.destroy()
         root.mainloop()
+
+#--------------END OF MAIN SCREEN--------------------
+
 
 if __name__ == main():
     main()
