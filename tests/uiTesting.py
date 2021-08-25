@@ -116,6 +116,33 @@ if __name__ == main():
 # root.mainloop()
 
 
+#=======
+from yahooApiCall import yahooApiCall
 
 
+
+#=======
+#--------------Weather--------------------
+weather = weatherCall()
+temperature = weather.temp
+humidity = weather.humidity
+weatherText = "WEATHER\n\n Temperature:  {temp} \n Humidity:  {humid}".format(temp = temperature, humid = humidity)
+labelWidget2 = Label(root, text= weatherText, fg='white', bg='black')
+labelWidget2.pack(side=TOP, anchor=E)
+
+#--------------Stonks--------------------
+yahoo = yahooApiCall()
+date = yahoo.date
+close = yahoo.closeList
+tickers = yahoo.tickers
+    
+stocks = f"STOCKS\n {date}\n\nTicker: {tickers[0]}\t{tickers[1]}\t{tickers[2]}\n\t{close[0]}\t{close[1]}\t{close[2]}\n"
+labelWidget3 = Label(root, text=stocks, fg='white', bg='black')
+labelWidget3.pack(side=BOTTOM, anchor=W)
+#--------------News--------------------
+newsText = "NEWS\n 1:   {title1}\n 2:   {title2}\n 3:   {title3}".format(title1 = newsCall.articleTitle1, title2 = newsCall.articleTitle2, title3 = newsCall.articleTitle3)
+labelWidget4 = Label(root, text=newsText, fg='white', bg='black')
+labelWidget4.pack(side=BOTTOM, anchor=E)
+
+root.mainloop()
 
