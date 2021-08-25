@@ -6,7 +6,6 @@
 import pandas as pd
 import pandas_datareader.data as dr
 import datetime as dt
-import math
 
 class yahooApiCall:
 
@@ -18,17 +17,13 @@ class yahooApiCall:
     start = end - dt.timedelta(days=1)
 
     df = dr.DataReader(stockList, 'yahoo', start, end)
+    df = df.tail(1)
    
 
     tickers = df.columns.levels[1]
     date = end
 
-    #works
+    #works 
     for i in range(len(stockList)):
-        openPrice = df['Open'][stockList[i]]
-        
-        openList.append(round(*openPrice,2))
-    
-    for j in range(len(stockList)):
-        closePrice = df['Close'][stockList[j]]
-        closeList.append(round(*closePrice,2))
+       closePrice = df['Close'][stockList[i]]
+       closeList.append(round(*closePrice,2))
