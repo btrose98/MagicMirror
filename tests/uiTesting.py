@@ -3,6 +3,7 @@
 from tkinter import *
 from weatherCall import weatherCall
 from newsCall import newsCall
+from yahooApiCall import yahooApiCall
 
 root = Tk()
 root.title('Smart Mirror - User Interface')
@@ -26,6 +27,7 @@ labelWidget3.pack(side=BOTTOM, anchor=W)
 yahoo = yahooApiCall()
 date = yahoo.date
 close = yahoo.closeList
+tickers = yahoo.tickers
     
 stocks = f"STOCKS\n {date}\n\nTicker: {tickers[0]}\t{tickers[1]}\t{tickers[2]}\n\t{close[0]}\t{close[1]}\t{close[2]}\n"
 
