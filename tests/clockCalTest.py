@@ -1,18 +1,20 @@
-# https://www.youtube.com/watch?v=YXPyB4XeYLA
+# importing whole module
+from tkinter.ttk import *
 import tkinter as tk
 from tkinter import *
 from weatherCall import weatherCall
 from newsCall import newsCall
-import time
+from quickstart import quickstart
+from time import strftime
+ 
 
 weather = weatherCall()
 news = newsCall()
-
+calendar = quickstart()
 
 def main():
 
 #--------------STARTUP SCREEN--------------------
-
     #create a spash screen
     startupscreen = tk.Tk()
     startupscreen.title('Smart Mirror: Python Mod')
@@ -39,81 +41,52 @@ def main():
 #--------------END OF STARTUP SCREEN--------------------
 
 #--------------START OF MAIN SCREEN--------------------
-
     root = tk.Tk()
     root.title('Mirror')
 
     #--------------WEATHER--------------------
     weatherText = "WEATHER\n\n Temperature:  {temp} \n Humidity:  {humid}".format(temp = weather.temp, humid = weather.humidity)
-    weatherWidget = Label(root, font = ('caviar dreams', 10), text= weatherText, fg='white', bg='pink', justify=LEFT)
+    weatherWidget = Label(root, font = ('calibri', 10), text= weatherText, fg='white', bg='pink', justify=LEFT)
     weatherWidget.pack(side=TOP, anchor=E)
     #--------------END OF WEATHER--------------------
+    #--------------CLOCK--------------------
+    # This function is used to
+    # display time on the label
+    def time():
+        string = strftime('%H:%M:%S %p')
+        masterclock.config(text = string)
+        masterclock.after(1000, time)
+    # Styling the label widget so that clock
+    # will look more attractive
+    masterclock = Label(root, font = ('calibri', 40, 'bold'), background = 'pink', foreground = 'white')
+    # Placing clock at the centre
+    # of the tkinter window
+    masterclock.pack(side=TOP, anchor=W)
+    time()
+    #--------------END OF CLOCK--------------------
+    #--------------CALENDAR--------------------
 
+    weatherText = "CALENDAR\n\n EVENTS: {events}".format(events = quickstart.event)
+    weatherWidget = Label(root, font = ('calibri', 10), text= weatherText, fg='white', bg='pink', justify=LEFT)
+    weatherWidget.pack(side=TOP, anchor=E)
+
+    #--------------END OF CALENDAR--------------------
     #--------------NEWS--------------------
     newsText = "NEWS\n\n 1: {title1}\n 2: {title2}\n 3: {title3}".format(title1 = news.articleTitle1, title2 = news.articleTitle2, title3 = news.articleTitle3)
-    newsWidget = Label(root, font = ('caviar dreams', 10), text=newsText, fg='white', bg='pink', justify=LEFT)
+    newsWidget = Label(root, font = ('calibri', 10), text=newsText, fg='white', bg='pink', justify=LEFT)
     newsWidget.pack(side=BOTTOM, anchor=E)
     #--------------END OF NEWS--------------------
 
-    #--------------CLOCK--------------------
-    while True:
-        #get the hour 
-        def getHour(time1=''):
-            time2 = time.strftime("%H")
-            if time2 != time1:
-                time1 = time2
-                clock_frame.config(text=time2)
-            clock_frame.after(200, getHour)
-
-        #get the minutes and seconds
-        def getMinSec(time3=''):
-            time4 = time.strftime(":%M:%S")
-            if time4 != time3:
-                time3 = time4
-                clock_frame2.config(text=time4)
-            clock_frame2.after(200, getMinSec)      
-
-        masterclock = Label(root)
-        masterclock.pack(side=TOP, anchor=W, padx=45)
-        
-        #masterclock.configure(background='black')
-        clock_frame = Label(root, font = ('caviar dreams', 130), bg='black', fg='white')
-        clock_frame.pack(in_=masterclock, side=LEFT)
-        clock_frame2 = Label(root, font = ('caviar dreams', 70), bg='black', fg='white')
-        clock_frame2.pack(in_=masterclock, side=LEFT, anchor = NW, ipady=15)
-
-        getHour()
-        getMinSec()
-    #--------------END OF CLOCK--------------------
-
-
-        root.attributes("-fullscreen", True)
-        root.configure(background='black')
-        startupscreen.destroy()
-        root.mainloop()
+    root.attributes("-fullscreen", True)
+    root.configure(background='black')
+    startupscreen.destroy()
+    root.mainloop()
 
 #--------------END OF MAIN SCREEN--------------------
 
 
 if __name__ == main():
     main()
-
-# root = Tk()
-# root.title('Smart Mirror - User Interface')
-# root.configure(background='black')
-
-# #--------------Calendar--------------------
-# labelWidget1 = Label(root, text="Calendar", fg='white', bg='black')
-# labelWidget1.pack(side=LEFT, anchor=W)
-
-
-
-# #--------------Stonks--------------------
-# labelWidget3 = Label(root, text="Stonks", fg='white', bg='black')
-# labelWidget3.pack(side=BOTTOM, anchor=W)
-
-
-# root.mainloop()
 
 
 
