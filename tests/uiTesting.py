@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import *
 from weatherCall import weatherCall
 from newsCall import newsCall
+from yahooApiCall import yahooApiCall
 import time
 
 weather = weatherCall()
@@ -48,7 +49,15 @@ def main():
     weatherWidget = Label(root, font = ('caviar dreams', 10), text= weatherText, fg='white', bg='pink', justify=LEFT)
     weatherWidget.pack(side=TOP, anchor=E)
     #--------------END OF WEATHER--------------------
-
+    #--------------Stonks--------------------
+    yahoo = yahooApiCall()
+    date = yahoo.date
+    close = yahoo.closeList
+    tickers = yahoo.tickers
+        
+    stocks = f"STOCKS\n {date}\n\nTicker: {tickers[0]}\t{tickers[1]}\t{tickers[2]}\n\t{close[0]}\t{close[1]}\t{close[2]}\n"
+    labelWidget3 = Label(root, text=stocks, fg='white', bg='black')
+    labelWidget3.pack(side=BOTTOM, anchor=W)
     #--------------NEWS--------------------
     newsText = "NEWS\n\n 1: {title1}\n 2: {title2}\n 3: {title3}".format(title1 = news.articleTitle1, title2 = news.articleTitle2, title3 = news.articleTitle3)
     newsWidget = Label(root, font = ('caviar dreams', 10), text=newsText, fg='white', bg='pink', justify=LEFT)
@@ -97,52 +106,3 @@ def main():
 
 if __name__ == main():
     main()
-
-# root = Tk()
-# root.title('Smart Mirror - User Interface')
-# root.configure(background='black')
-
-# #--------------Calendar--------------------
-# labelWidget1 = Label(root, text="Calendar", fg='white', bg='black')
-# labelWidget1.pack(side=LEFT, anchor=W)
-
-
-
-# #--------------Stonks--------------------
-# labelWidget3 = Label(root, text="Stonks", fg='white', bg='black')
-# labelWidget3.pack(side=BOTTOM, anchor=W)
-
-
-# root.mainloop()
-
-
-#=======
-from yahooApiCall import yahooApiCall
-
-
-
-#=======
-#--------------Weather--------------------
-weather = weatherCall()
-temperature = weather.temp
-humidity = weather.humidity
-weatherText = "WEATHER\n\n Temperature:  {temp} \n Humidity:  {humid}".format(temp = temperature, humid = humidity)
-labelWidget2 = Label(root, text= weatherText, fg='white', bg='black')
-labelWidget2.pack(side=TOP, anchor=E)
-
-#--------------Stonks--------------------
-yahoo = yahooApiCall()
-date = yahoo.date
-close = yahoo.closeList
-tickers = yahoo.tickers
-    
-stocks = f"STOCKS\n {date}\n\nTicker: {tickers[0]}\t{tickers[1]}\t{tickers[2]}\n\t{close[0]}\t{close[1]}\t{close[2]}\n"
-labelWidget3 = Label(root, text=stocks, fg='white', bg='black')
-labelWidget3.pack(side=BOTTOM, anchor=W)
-#--------------News--------------------
-newsText = "NEWS\n 1:   {title1}\n 2:   {title2}\n 3:   {title3}".format(title1 = newsCall.articleTitle1, title2 = newsCall.articleTitle2, title3 = newsCall.articleTitle3)
-labelWidget4 = Label(root, text=newsText, fg='white', bg='black')
-labelWidget4.pack(side=BOTTOM, anchor=E)
-
-root.mainloop()
-
