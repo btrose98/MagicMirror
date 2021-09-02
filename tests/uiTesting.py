@@ -60,38 +60,47 @@ def main():
     weatherTextWidget.grid(row=1, sticky="s")
 
     #--------------STONKS--------------------
+    stocksContainer = Label(root)
+    stocksContainer.grid(row=2, columnspan=2, sticky="sew")
+    stocksContainer.columnconfigure(1, weight=1)
+
     date = yahoo.date
     close = yahoo.closeList
     tickers = yahoo.tickers
         
     stocks = f"STOCKS\n {date}\n\nTicker: {tickers[0]}\t{tickers[1]}\t{tickers[2]}\n\t{close[0]}\t{close[1]}\t{close[2]}\n"
-    stocksWidget = Label(root, font = ('calibri', 10), text=stocks, fg='white', bg='pink')
-    stocksWidget.grid(row=2, column=0, columnspan=2, sticky="sew")
+    stocksWidget = Label(stocksContainer, font = ('calibri', 10), text=stocks, fg='white', bg='pink')
+    stocksWidget.grid(columnspan=2, sticky="ew")
     
     #--------------CLOCK--------------------
-    # This function is used to
-    # display time on the label
+    # This function is used to display time on the label
     def time():
         string = strftime('%H:%M:%S %p')
         masterclock.config(text = string)
         masterclock.after(1000, time)
-    # Styling the label widget so that clock
-    # will look more attractive
-    masterclock = Label(root, font = ('calibri', 40, 'bold'), background = 'pink', foreground = 'white')
-    # Placing clock at the centre
-    # of the tkinter window
-    masterclock.grid(row=0, column=0, sticky="nw")
+
+    clockContainer = Label(root)
+    clockContainer.grid(row=0, column=0, sticky="nw")
+
+    masterclock = Label(clockContainer, font = ('calibri', 40, 'bold'), background = 'pink', foreground = 'white')
+    masterclock.grid(sticky="nw")
     time()
  
     #--------------CALENDAR--------------------
+    calendarContainer = Label(root)
+    calendarContainer.grid(row=1, column=0, sticky="w")
+
     calendarText = "CALENDAR: \n\n {event1} \n {event2} \n {event3} \n {event4} \n {event5} \n {event6} \n {event7} \n {event8} \n {event9} \n {event10}".format(event1 = calendar.event1, event2 = calendar.event2, event3 = calendar.event3, event4 = calendar.event4, event5 = calendar.event5, event6 = calendar.event6, event7 = calendar.event7, event8 = calendar.event8, event9 = calendar.event9, event10 = calendar.event10)
-    calendarWidget = Label(root, font = ('calibri', 10), text= calendarText, fg='white', bg='pink')
-    calendarWidget.grid(row=1, column=0, sticky="w")
+    calendarWidget = Label(calendarContainer, font = ('calibri', 10), text= calendarText, fg='white', bg='pink')
+    calendarWidget.grid(sticky="w")
 
     #--------------NEWS--------------------
+    newsContainer = Label(root)
+    newsContainer.grid(row=1, column=1, sticky="e")
+    
     newsText = "NEWS\n\n 1: {title1}\n 2: {title2}\n 3: {title3}".format(title1 = news.articleTitle1, title2 = news.articleTitle2, title3 = news.articleTitle3)
-    newsWidget = Label(root, font = ('calibri', 10), text=newsText, fg='white', bg='pink')
-    newsWidget.grid(row=1, column=1, sticky="e")
+    newsWidget = Label(newsContainer, font = ('calibri', 10), text=newsText, fg='white', bg='pink')
+    newsWidget.grid(sticky="e")
 
     root.attributes("-fullscreen", True)
     root.configure(background='black')
