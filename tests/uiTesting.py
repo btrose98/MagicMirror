@@ -1,4 +1,3 @@
-# importing whole module
 from tkinter.ttk import *
 import tkinter as tk
 from tkinter import *
@@ -7,11 +6,11 @@ from newsCall import newsCall
 from quickstart import quickstart
 from yahooApiCall import yahooApiCall
 from time import strftime
- 
 
 weather = weatherCall()
 news = newsCall()
 calendar = quickstart()
+yahoo = yahooApiCall()
 
 def main():
 
@@ -38,7 +37,6 @@ def main():
     # Positions the window in the center of the page.
     startupscreen.geometry("+{}+{}".format(positionRight, positionDown))
     startupscreen.update()
-
 #--------------END OF STARTUP SCREEN--------------------
 
 #--------------START OF MAIN SCREEN--------------------
@@ -47,19 +45,17 @@ def main():
 
     #--------------WEATHER--------------------
     weatherText = "WEATHER\n\n Temperature:  {temp} \n Humidity:  {humid}".format(temp = weather.temp, humid = weather.humidity)
-    weatherWidget = Label(root, font = ('calibri', 10), text= weatherText, fg='white', bg='pink', justify=LEFT)
-    weatherWidget.pack(side=TOP, anchor=E)
-   
+    weatherWidget = Label(root, font = ('calibri', 10), text= weatherText, fg='white', bg='pink')
+    weatherWidget.grid(row=0, column=1, sticky="e")
     
-    #--------------Stonks--------------------
-    yahoo = yahooApiCall()
+    #--------------STONKS--------------------
     date = yahoo.date
     close = yahoo.closeList
     tickers = yahoo.tickers
         
     stocks = f"STOCKS\n {date}\n\nTicker: {tickers[0]}\t{tickers[1]}\t{tickers[2]}\n\t{close[0]}\t{close[1]}\t{close[2]}\n"
-    labelWidget3 = Label(root, font = ('calibri', 10), text=stocks, fg='white', bg='pink')
-    labelWidget3.pack(side=BOTTOM, anchor=S)
+    stocksWidget = Label(root, font = ('calibri', 10), text=stocks, fg='white', bg='pink')
+    stocksWidget.grid(row=2, column=0, columnspan=2, sticky="sew")
     
     #--------------CLOCK--------------------
     # This function is used to
@@ -73,34 +69,27 @@ def main():
     masterclock = Label(root, font = ('calibri', 40, 'bold'), background = 'pink', foreground = 'white')
     # Placing clock at the centre
     # of the tkinter window
-    masterclock.pack(side=TOP, anchor=W)
+    masterclock.grid(row=0, column=0, sticky="w")
     time()
  
     #--------------CALENDAR--------------------
-
     calendarText = "CALENDAR: \n\n {event1} \n {event2} \n {event3} \n {event4} \n {event5} \n {event6} \n {event7} \n {event8} \n {event9} \n {event10}".format(event1 = calendar.event1, event2 = calendar.event2, event3 = calendar.event3, event4 = calendar.event4, event5 = calendar.event5, event6 = calendar.event6, event7 = calendar.event7, event8 = calendar.event8, event9 = calendar.event9, event10 = calendar.event10)
-    calendarWidget = Label(root, font = ('calibri', 10), text= calendarText, fg='white', bg='pink', justify=LEFT)
-    calendarWidget.pack(side=BOTTOM, anchor=W)
-
+    calendarWidget = Label(root, font = ('calibri', 10), text= calendarText, fg='white', bg='pink')
+    calendarWidget.grid(row=1, column=0, sticky="w")
 
     #--------------NEWS--------------------
     newsText = "NEWS\n\n 1: {title1}\n 2: {title2}\n 3: {title3}".format(title1 = news.articleTitle1, title2 = news.articleTitle2, title3 = news.articleTitle3)
-    newsWidget = Label(root, font = ('calibri', 10), text=newsText, fg='white', bg='pink', justify=LEFT)
-    newsWidget.pack(side=BOTTOM, anchor=E)
-
+    newsWidget = Label(root, font = ('calibri', 10), text=newsText, fg='white', bg='pink')
+    newsWidget.grid(row=1, column=1, sticky="e")
 
     root.attributes("-fullscreen", True)
     root.configure(background='black')
+    root.columnconfigure(1, weight=1)
+    root.rowconfigure(1, weight=1)
     startupscreen.destroy()
     root.mainloop()
 
 #--------------END OF MAIN SCREEN--------------------
 
-
 if __name__ == main():
     main()
-
-
-
-
-
