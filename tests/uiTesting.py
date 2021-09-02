@@ -6,6 +6,9 @@ from newsCall import newsCall
 from quickstart import quickstart
 from yahooApiCall import yahooApiCall
 from time import strftime
+from PIL import ImageTk,Image  
+import os 
+
 
 weather = weatherCall()
 news = newsCall()
@@ -43,11 +46,19 @@ def main():
     root = tk.Tk()
     root.title('Mirror')
 
-    #--------------WEATHER--------------------
+    #--------------WEATHER--------------------  
+    weatherContainer = Label(root, bg='black')
+    weatherContainer.grid(row=0, column=1, sticky="ne")
+
+    imagePath = os.getcwd() + "/assets/whiteSun.png"
+    weatherImage = ImageTk.PhotoImage(master = weatherContainer, image = Image.open(imagePath)) 
+    weatherImageWidget = Label(weatherContainer, image = weatherImage)
+    weatherImageWidget.grid(row=0, sticky="n")
+
     weatherText = "WEATHER\n\n Temperature:  {temp} \n Humidity:  {humid}".format(temp = weather.temp, humid = weather.humidity)
-    weatherWidget = Label(root, font = ('calibri', 10), text= weatherText, fg='white', bg='pink')
-    weatherWidget.grid(row=0, column=1, sticky="e")
-    
+    weatherTextWidget = Label(weatherContainer, font = ('calibri', 10), text= weatherText, fg='white', bg='pink')
+    weatherTextWidget.grid(row=1, sticky="s")
+
     #--------------STONKS--------------------
     date = yahoo.date
     close = yahoo.closeList
@@ -69,7 +80,7 @@ def main():
     masterclock = Label(root, font = ('calibri', 40, 'bold'), background = 'pink', foreground = 'white')
     # Placing clock at the centre
     # of the tkinter window
-    masterclock.grid(row=0, column=0, sticky="w")
+    masterclock.grid(row=0, column=0, sticky="nw")
     time()
  
     #--------------CALENDAR--------------------
