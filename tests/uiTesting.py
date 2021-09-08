@@ -7,13 +7,13 @@ from quickstart import quickstart
 from yahooApiCall import yahooApiCall
 from time import strftime
 from PIL import ImageTk,Image  
-import os 
-
+from cryptoCall import cryptoCall
 
 weather = weatherCall()
 news = newsCall()
 calendar = quickstart()
 yahoo = yahooApiCall()
+crypto = cryptoCall()
 
 def main():
 
@@ -50,8 +50,7 @@ def main():
     weatherContainer = Label(root, bg='black')
     weatherContainer.grid(row=0, column=1, sticky="ne")
 
-    imagePath = os.getcwd() + "/assets/whiteSun.png"
-    weatherImage = ImageTk.PhotoImage(master = weatherContainer, image = Image.open(imagePath)) 
+    weatherImage = ImageTk.PhotoImage(master = weatherContainer, image = Image.open(weather.imagePath)) 
     weatherImageWidget = Label(weatherContainer, image = weatherImage)
     weatherImageWidget.grid(row=0, sticky="n")
 
@@ -71,6 +70,15 @@ def main():
     stocks = f"STOCKS\n {date}\n\nTicker: {tickers[0]}\t{tickers[1]}\t{tickers[2]}\n\t{close[0]}\t{close[1]}\t{close[2]}\n"
     stocksWidget = Label(stocksContainer, font = ('calibri', 10), text=stocks, fg='white', bg='pink')
     stocksWidget.grid(columnspan=2, sticky="ew")
+
+    #--------------CRYPTO--------------------
+    cryptoContainer = Label(root)
+    cryptoContainer.grid(row=3, columnspan=2, sticky="sew")
+    cryptoContainer.columnconfigure(1, weight=1)
+
+    cryptoText = "${coin1},      ${coin2},        ${coin3}".format(coin1 = crypto.btc, coin2 = crypto.eth, coin3 = crypto.ada)
+    cryptoWidget = Label(cryptoContainer, font = ('calibri', 10), text=cryptoText, fg='white', bg='pink')
+    cryptoWidget.grid(columnspan=2, sticky="ew")
     
     #--------------CLOCK--------------------
     # This function is used to display time on the label

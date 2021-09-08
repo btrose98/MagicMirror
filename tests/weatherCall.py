@@ -1,4 +1,4 @@
-import sys
+import sys, os
 from configparser import ConfigParser
 import requests, json
 
@@ -22,6 +22,14 @@ class weatherCall:
 
     temp = data["current"]["temp"]
     humidity = data["current"]["humidity"]
+    # rain = data["current"]["rain"]["1h"] #in mm
+    cloud = data["current"]["clouds"] #in %
+
+    imagePath = os.getcwd() + "/assets/whiteSun.png" 
+    # if(rain > 0) : imagePath = os.getcwd() + "/assets/rain.png"
+    # elif (cloud > 25) : imagePath = os.getcwd() + "/assets/clouds.png" 
+    if (cloud > 20) : imagePath = os.getcwd() + "/assets/clouds.png" 
+
 
     # print(temp)
     # print(humidity)
